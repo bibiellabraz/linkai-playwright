@@ -10,11 +10,11 @@ test('deve logar com sucesso', async ({ page }) => {
 
     await page
         .getByRole('textbox', { name: 'Seu @username incrível' })
-        .fill('user.username');
+        .fill(user.username);
 
     await page
         .getByRole('textbox', { name: 'Digite sua senha secreta' })
-        .fill('user.password');
+        .fill(user.password);
 
     await page
         .getByRole('button', { name: 'Entrar' })
