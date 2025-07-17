@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 
 test('deve logar com sucesso', async ({ page }) => {
     const user = {
-        name: 'Gabriella',
+        name: 'gabriella',
         username: 'gabriella',
         password: 'pwd123'
     }
