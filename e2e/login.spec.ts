@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test'
 
 test('deve logar com sucesso', async ({ page }) => {
     const user = {
+        name: 'Gabriella',
         username: 'gabriella',
         password: 'pwd123'
     }
@@ -20,5 +21,5 @@ test('deve logar com sucesso', async ({ page }) => {
         .getByRole('button', { name: 'Entrar' })
         .click();
 
-    await expect(page.locator('h1')).toContainText('Olá, gabriella! 👋');
+    await expect(page.locator('h1')).toContainText(`Olá, ${user.name}! 👋`);
 });
