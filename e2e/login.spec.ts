@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 
 test('deve logar com sucesso', async ({ page }) => {
-        const user = {
+    const user = {
         username: 'gabriella',
         password: 'pwd123'
     }
