@@ -1,20 +1,24 @@
 import { test, expect } from '@playwright/test'
 
 test('deve logar com sucesso', async ({ page }) => {
-
-    const user = {
+        const user = {
         username: 'gabriella',
         password: 'pwd123'
     }
 
-    await page.goto('http://localhost:3000/login')
+    await page.goto('http://localhost:3000/login');
 
-    await page.locator('#username').fill(user.username)
-    await page.locator('#password').fill(user.password)
+    await page
+        .getByRole('textbox', { name: 'Seu @username incrível' })
+        .fill('user.username');
 
-    await page.locator('button[type="submit"]').click()
+    await page
+        .getByRole('textbox', { name: 'Digite sua senha secreta' })
+        .fill('user.password');
 
-    const title = page.locator('h1')
-    await expect(title).toContainText('Olá, gabriella!')
+    await page
+        .getByRole('button', { name: 'Entrar' })
+        .click();
 
-})
+    await expect(page.locator('h1')).toContainText('Olá, gabriella! 👋');
+});
