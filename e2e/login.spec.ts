@@ -1,51 +1,36 @@
 import { test, expect } from '@playwright/test'
 
-// import { writeFileSync } from 'fs'
+import { getLoginPage } from '../support/pages/LoginPage'
+import { log } from 'console';
 
 test('deve logar com sucesso', async ({ page }) => {
+
+    const loginPage = getLoginPage(page)
+
     const user = {
         name: 'gabriella',
         username: 'gabriella',
         password: 'pwd123'
     }
 
-    await page.goto('http://localhost:3000/login');
-
-    await page
-        .getByRole('textbox', { name: 'Seu @username incrível' })
-        .fill(user.username);
-
-    await page
-        .getByRole('textbox', { name: 'Digite sua senha secreta' })
-        .fill(user.password);
-
-    await page
-        .getByRole('button', { name: 'Entrar' })
-        .click();
+    await loginPage.open()
+    await loginPage.submit(user.username, user.password)
 
     await expect(page.locator('h1')).toContainText(`Olá, ${user.name}! 👋`);
 });
 
 test('Não deve logar com senha incorreta', async ({ page }) => {
+
+    const loginPage = getLoginPage(page)
+
     const user = {
         name: 'gabriella',
         username: 'gabriella',
         password: '123456'
     }
 
-    await page.goto('http://localhost:3000/login');
-
-    await page
-        .getByRole('textbox', { name: 'Seu @username incrível' })
-        .fill(user.username);
-
-    await page
-        .getByRole('textbox', { name: 'Digite sua senha secreta' })
-        .fill(user.password);
-
-    await page
-        .getByRole('button', { name: 'Entrar' })
-        .click();
+    await loginPage.open()
+    await loginPage.submit(user.username, user.password)
 
     const toast = page.locator('.toast')
 
@@ -54,25 +39,17 @@ test('Não deve logar com senha incorreta', async ({ page }) => {
 });
 
 test('Não deve logar com usuário não cadastrado', async ({ page }) => {
+
+    const loginPage = getLoginPage(page)
+
     const user = {
         name: 'gabriella',
         username: 'not-found',
         password: '123456'
     }
 
-    await page.goto('http://localhost:3000/login');
-
-    await page
-        .getByRole('textbox', { name: 'Seu @username incrível' })
-        .fill(user.username);
-
-    await page
-        .getByRole('textbox', { name: 'Digite sua senha secreta' })
-        .fill(user.password);
-
-    await page
-        .getByRole('button', { name: 'Entrar' })
-        .click();
+    await loginPage.open()
+    await loginPage.submit(user.username, user.password)
 
     const toast = page.locator('.toast')
 
