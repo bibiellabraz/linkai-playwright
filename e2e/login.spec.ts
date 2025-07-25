@@ -42,7 +42,7 @@ test('Não deve logar com senha incorreta', async ({ page }) => {
     await expect(toast.element()).toContainText('Algo deu errado com seu login. Por favor, verifique suas credenciais e tente novamente.')
 });
 
-test('Não deve logar com usuário não cadastrado', async ({ page }) => {
+test('Não deve logar com usuário NÃO cadastrado', async ({ page }) => {
 
     const loginPage = getLoginPage(page)
     const toast = getToast(page)
@@ -58,4 +58,58 @@ test('Não deve logar com usuário não cadastrado', async ({ page }) => {
 
     await expect(toast.element()).toContainText('Oops!')
     await expect(toast.element()).toContainText('Algo deu errado com seu login. Por favor, verifique suas credenciais e tente novamente.')
+});
+
+test('Não deve logar quando não informo nenhum dos campos', async ({ page }) => {
+
+    const loginPage = getLoginPage(page)
+    const toast = getToast(page)
+
+    const user = {
+        name: 'gabriella',
+        username: '',
+        password: ''
+    }
+
+    await loginPage.open()
+    await loginPage.submit(user.username, user.password)
+
+    await expect(toast.element()).toContainText('Campos obrigatórios')
+    await expect(toast.element()).toContainText('Por favor, preencha todos os campos.')
+});
+
+test('Não deve logar quando não informo o usuário', async ({ page }) => {
+
+    const loginPage = getLoginPage(page)
+    const toast = getToast(page)
+
+    const user = {
+        name: 'gabriella',
+        username: '',
+        password: 'pwd123'
+    }
+
+    await loginPage.open()
+    await loginPage.submit(user.username, user.password)
+
+    await expect(toast.element()).toContainText('Campos obrigatórios')
+    await expect(toast.element()).toContainText('Por favor, preencha todos os campos.')
+});
+
+test('Não deve logar quando não informo a senha', async ({ page }) => {
+
+    const loginPage = getLoginPage(page)
+    const toast = getToast(page)
+
+    const user = {
+        name: 'gabriella',
+        username: 'gabriella',
+        password: ''
+    }
+
+    await loginPage.open()
+    await loginPage.submit(user.username, user.password)
+
+    await expect(toast.element()).toContainText('Campos obrigatórios')
+    await expect(toast.element()).toContainText('Por favor, preencha todos os campos.')
 });
