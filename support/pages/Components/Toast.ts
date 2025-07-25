@@ -2,7 +2,7 @@ import { Page } from '@playwright/test'
 
 export function getToast(page: Page) {
     return {
-        toast: () => {
+        element: () => {
             return page.locator('.toast')
         }
     }
