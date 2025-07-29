@@ -1,11 +1,17 @@
 import { faker } from '@faker-js/faker'
 
-export interface User {
+export interface UserSignup {
     name: string
     username: string
     password: string
     confirmPassword: string
     email: string
+}
+
+export interface UserLogin {
+  name: string
+  username: string
+  password: string
 }
 
 export function getNewUser() {

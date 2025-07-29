@@ -4,7 +4,7 @@ import { getSignupPage } from '../support/pages/SignupPage'
 import { getDashPage } from '../support/pages/DashPage'
 import { getToast } from '../support/pages/Components/Toast'
 
-import { User, getNewUser } from '../support/fixtures/User'
+import { UserSignup, getNewUser } from '../support/fixtures/User'
 
 test('Deve cadastrar um novo usuário com sucesso.', async ({ page }) => {
 
@@ -12,7 +12,7 @@ test('Deve cadastrar um novo usuário com sucesso.', async ({ page }) => {
     const DashPage = getDashPage(page)
     const toast = getToast(page)
 
-    const user: User = getNewUser()
+    const user: UserSignup = getNewUser()
 
     await SignupPage.open()
     await SignupPage.fill(user)
@@ -40,7 +40,7 @@ test('Não deve cadastrar quando o e-mail for incorreto.', async ({ page }) => {
 
     const SignupPage = getSignupPage(page)
 
-    const user: User = {
+    const user: UserSignup = {
         name: 'gabriella',
         username: 'gabriella',
         email: 'www.teste.com.br',
@@ -62,7 +62,7 @@ test('Não deve cadastrar quando o username é incorreto.', async ({ page }) => 
     const SignupPage = getSignupPage(page)
     const toast = getToast(page)
 
-    const user: User = {
+    const user: UserSignup = {
         name: 'gabriella',
         username: 'gabriella&Cotto',
         email: 'bibiellabraz@gmail.com',
@@ -84,7 +84,7 @@ test('Não deve cadastrar quando as senhas forem diferentes.', async ({ page }) 
     const SignupPage = getSignupPage(page)
     const toast = getToast(page)
 
-    const user: User = {
+    const user: UserSignup = {
         name: 'gabriella',
         username: 'gabriella_Cotto',
         email: 'bibiellabraz@gmail.com',
