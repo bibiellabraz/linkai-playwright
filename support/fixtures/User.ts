@@ -14,7 +14,7 @@ export interface UserLogin {
   password: string
 }
 
-export function getNewUser() {
+export function getFakeUser() {
 
       const defautPassword = 'pwd123'
 
@@ -25,6 +25,20 @@ export function getNewUser() {
         password: defautPassword,
         confirmPassword: defautPassword
     }
+}
+
+export function getNewUser() {
+
+      const defautPassword = 'pwd123'
+
+      return {
+        name: 'Gabriella Cotto',
+        username: 'gabriella',
+        email: 'bibiellabraz@gmail.com',
+        password: defautPassword,
+        confirmPassword: defautPassword
+    }
+
 }
 
 export const Users = {

@@ -4,6 +4,8 @@ import { getSignupPage } from '../support/pages/SignupPage'
 import { getDashPage } from '../support/pages/DashPage'
 import { getToast } from '../support/pages/Components/Toast'
 
+import { removeUserByEmail } from '../support/database'
+
 import { UserSignup, getNewUser } from '../support/fixtures/User'
 
 test('Deve realizar o cadastro com sucesso.', async ({ page }) => {
@@ -13,6 +15,7 @@ test('Deve realizar o cadastro com sucesso.', async ({ page }) => {
     const toast = getToast(page)
 
     const user: UserSignup = getNewUser()
+    await removeUserByEmail(user.email)
 
     await SignupPage.open()
     await SignupPage.fill(user)
@@ -127,7 +130,7 @@ test('Deve exibir erro ao tentar cadastrar com e-mail já cadastrado.', async ({
     const user: UserSignup = {
         name: 'Gabriella',
         username: 'novo_usuario_unico',
-        email: 'bibiellabraz@gmail.com', // já usado
+        email: 'bibiellabraz@gmail.com',
         password: 'abc123',
         confirmPassword: 'abc123'
     }
