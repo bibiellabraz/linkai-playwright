@@ -6,7 +6,7 @@ import { getToast } from '../support/pages/Components/Toast'
 
 import { removeUserByEmail } from '../support/database'
 
-import { UserSignup, getNewUser } from '../support/fixtures/User'
+import { UserSignup, getNewUser, getDuplicateUser } from '../support/fixtures/User'
 
 test('Deve realizar o cadastro com sucesso.', async ({ page }) => {
 
@@ -109,7 +109,7 @@ test('Deve exibir erro ao tentar cadastrar com username já existente.', async (
 
     const user: UserSignup = {
         name: 'gabriella',
-        username: 'gabriella', // já existente no sistema
+        username: 'gabriella',
         email: 'bibiellabraz@gmail.com',
         password: 'pwd123',
         confirmPassword: 'pwd123'
@@ -119,8 +119,8 @@ test('Deve exibir erro ao tentar cadastrar com username já existente.', async (
     await SignupPage.fill(user)
     await SignupPage.submit()
 
-    await expect(toast.element()).toContainText('Erro no cadastro')
-    await expect(toast.element()).toContainText('User with that email or username already exists')
+    await expect(toast.element()).toContainText('Oops!')
+    await expect(toast.element()).toContainText('Parece que esse e-mail ou nome de usuário já foi cadastrado. Tente outro, por favor.')
 });
 
 test('Deve exibir erro ao tentar cadastrar com e-mail já cadastrado.', async ({ page }) => {
@@ -139,8 +139,8 @@ test('Deve exibir erro ao tentar cadastrar com e-mail já cadastrado.', async ({
     await SignupPage.fill(user)
     await SignupPage.submit()
 
-    await expect(toast.element()).toContainText('Erro no cadastro')
-    await expect(toast.element()).toContainText('User with that email or username already exists')
+    await expect(toast.element()).toContainText('Oops!')
+    await expect(toast.element()).toContainText('Parece que esse e-mail ou nome de usuário já foi cadastrado. Tente outro, por favor.')
 });
 
 test('Deve exibir erro se a senha tiver menos de 6 caracteres.', async ({ page }) => {

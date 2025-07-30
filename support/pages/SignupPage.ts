@@ -19,7 +19,7 @@ export function getSignupPage(page: Page) {
                 .fill(user.name);
 
             await page
-                .getByRole('textbox', { name: 'Escolha um @username único (ex: superdev_123)' })
+                .getByRole('textbox', { name: 'Escolha um @username único (ex: papitotechqa)' })
                 .fill(user.username);
 
             await emailField().fill(user.email);

@@ -32,7 +32,7 @@ export function getNewUser() {
       const defautPassword = 'pwd123'
 
       return {
-        name: 'Gabriella Cotto',
+        name: 'gabriella',
         username: 'gabriella',
         email: 'bibiellabraz@gmail.com',
         password: defautPassword,
