@@ -6,7 +6,7 @@ import { getToast } from '../support/pages/Components/Toast'
 
 import { UserSignup, getNewUser } from '../support/fixtures/User'
 
-test('Deve cadastrar um novo usuário com sucesso.', async ({ page }) => {
+test('Deve realizar o cadastro com sucesso.', async ({ page }) => {
 
     const SignupPage = getSignupPage(page)
     const DashPage = getDashPage(page)
@@ -23,7 +23,7 @@ test('Deve cadastrar um novo usuário com sucesso.', async ({ page }) => {
     await expect(toast.element()).toContainText('Bem-vindo ao Linkaí. Agora você pode criar seu perfil.')
 });
 
-test('Não deve cadastrar quando nenhum campo é informado.', async ({ page }) => {
+test('Deve exibir erro ao tentar cadastrar com campos obrigatórios em branco.', async ({ page }) => {
 
     const SignupPage = getSignupPage(page)
     const toast = getToast(page)
@@ -36,7 +36,7 @@ test('Não deve cadastrar quando nenhum campo é informado.', async ({ page }) =
 
 });
 
-test('Não deve cadastrar quando o e-mail for incorreto.', async ({ page }) => {
+test('Deve validar o formato inválido de email.', async ({ page }) => {
 
     const SignupPage = getSignupPage(page)
 
@@ -78,7 +78,7 @@ test('Não deve cadastrar quando o username é incorreto.', async ({ page }) => 
 
 });
 
-test('Não deve cadastrar quando as senhas forem diferentes.', async ({ page }) => {
+test('Deve exibir erro quando a confirmação de senha for diferente da senha.', async ({ page }) => {
 
     const SignupPage = getSignupPage(page)
     const toast = getToast(page)
@@ -99,3 +99,68 @@ test('Não deve cadastrar quando as senhas forem diferentes.', async ({ page }) 
     await expect(toast.element()).toContainText('A confirmação de senha deve ser igual à senha.')
 
 });
+
+test('*Deve exibir erro ao tentar cadastrar com username já existente.', async ({ page }) => {
+    const SignupPage = getSignupPage(page)
+    const toast = getToast(page)
+
+    const user: UserSignup = {
+        name: 'gabriella',
+        username: 'gabriella', // já existente no sistema
+        email: 'bibiellabraz@gmail.com',
+        password: 'pwd123',
+        confirmPassword: 'pwd123'
+    }
+
+    await SignupPage.open()
+    await SignupPage.fill(user)
+    await SignupPage.submit()
+
+    await expect(toast.element()).toContainText('Erro no cadastro')
+    await expect(toast.element()).toContainText('User with that email or username already exists')
+});
+
+test('*Deve exibir erro ao tentar cadastrar com e-mail já cadastrado.', async ({ page }) => {
+    const SignupPage = getSignupPage(page)
+    const toast = getToast(page)
+
+    const user: UserSignup = {
+        name: 'Gabriella',
+        username: 'novo_usuario_unico',
+        email: 'bibiellabraz@gmail.com', // já usado
+        password: 'abc123',
+        confirmPassword: 'abc123'
+    }
+
+    await SignupPage.open()
+    await SignupPage.fill(user)
+    await SignupPage.submit()
+
+    await expect(toast.element()).toContainText('Erro no cadastro')
+    await expect(toast.element()).toContainText('User with that email or username already exists')
+});
+
+test('*Deve exibir erro se a senha tiver menos de 6 caracteres.', async ({ page }) => {
+  const SignupPage = getSignupPage(page)
+  const toast = getToast(page)
+
+  const user: UserSignup = {
+    name: 'Gabriella',
+    username: 'gabriella_minpwd',
+    email: 'gabriella@teste.com',
+    password: 'abc',
+    confirmPassword: 'abc'
+  }
+
+  await SignupPage.open()
+  await SignupPage.fill(user)
+  await SignupPage.submit()
+
+  await expect(toast.element()).toContainText('Senha muito curta')
+  await expect(toast.element()).toContainText('A senha deve ter pelo menos 6 caracteres.')
+});
+
+
+
+
+
