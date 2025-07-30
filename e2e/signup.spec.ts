@@ -100,7 +100,7 @@ test('Deve exibir erro quando a confirmação de senha for diferente da senha.',
 
 });
 
-test('*Deve exibir erro ao tentar cadastrar com username já existente.', async ({ page }) => {
+test('Deve exibir erro ao tentar cadastrar com username já existente.', async ({ page }) => {
     const SignupPage = getSignupPage(page)
     const toast = getToast(page)
 
@@ -120,7 +120,7 @@ test('*Deve exibir erro ao tentar cadastrar com username já existente.', async 
     await expect(toast.element()).toContainText('User with that email or username already exists')
 });
 
-test('*Deve exibir erro ao tentar cadastrar com e-mail já cadastrado.', async ({ page }) => {
+test('Deve exibir erro ao tentar cadastrar com e-mail já cadastrado.', async ({ page }) => {
     const SignupPage = getSignupPage(page)
     const toast = getToast(page)
 
@@ -140,7 +140,7 @@ test('*Deve exibir erro ao tentar cadastrar com e-mail já cadastrado.', async (
     await expect(toast.element()).toContainText('User with that email or username already exists')
 });
 
-test('*Deve exibir erro se a senha tiver menos de 6 caracteres.', async ({ page }) => {
+test('Deve exibir erro se a senha tiver menos de 6 caracteres.', async ({ page }) => {
   const SignupPage = getSignupPage(page)
   const toast = getToast(page)
 
